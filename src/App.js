@@ -1,55 +1,56 @@
-import './App.css';
-import { Upload, message, Button } from 'antd';
-import { InboxOutlined } from '@ant-design/icons';
 
-const { Dragger } = Upload;
+import './App.less';
+import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import routers from './router/index.js'
+import HeaderComponent from './layout/header';
 
-const props = {
-  name: 'file',
-  multiple: true,
-  action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-  onChange (info) {
-    const { status } = info.file;
-    if (status !== 'uploading') {
-      console.log(info.file, info.fileList);
-    }
-    if (status === 'done') {
-      message.success(`${info.file.name} file uploaded successfully.`);
-    } else if (status === 'error') {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  },
-  onDrop (e) {
-    console.log('Dropped files', e.dataTransfer.files);
-  },
-}
-
-function App () {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <Dragger {...props}>
-          <p className="ant-upload-drag-icon">
-            <InboxOutlined />
-          </p>
-          <p className="ant-upload-text">Click or drag file to this area to upload</p>
-          <p className="ant-upload-hint">
-            Support for a single or bulk upload. Strictly prohibit from uploading company data or other
-            band files
-          </p>
-        </Dragger>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <Button>Learn React</Button>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+	render () {
+		return (
+			<BrowserRouter>
+				<Switch>
+					{
+						routers.map((router, index) => {
+							return (
+								<Route
+									key={index}
+									exact={router.exact}
+									path={router.path}
+									render={(props) => {
+										console.log(1, router)
+										return (
+											<div className="App">
+												<header className="App-header">
+													<HeaderComponent {...props} />
+													<router.component {...props}>
+														{
+															router.children?.map((item, itemIndex) => {
+																console.log(2, item)
+																return (
+																	<Route
+																		exact={item.exact}
+																		key={itemIndex}
+																		path={item.path}
+																		component={item.component}
+																	/>
+																)
+															})
+														}
+													</router.component>
+													{/* <UploadPage /> */}
+												</header>
+											</div>
+										)
+									}}
+								/>
+							)
+						})
+					}
+				</Switch>
+			</BrowserRouter>
+		)
+	}
 }
 
 export default App;
