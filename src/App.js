@@ -18,7 +18,6 @@ class App extends React.Component {
 									exact={router.exact}
 									path={router.path}
 									render={(props) => {
-										console.log(1, router)
 										return (
 											<div className="App">
 												<header className="App-header">
@@ -26,7 +25,6 @@ class App extends React.Component {
 													<router.component {...props}>
 														{
 															router.children?.map((item, itemIndex) => {
-																console.log(2, item)
 																return (
 																	<Route
 																		exact={item.exact}
