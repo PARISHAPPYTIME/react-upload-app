@@ -3,7 +3,9 @@ import { Upload, Button, Typography, message, Input } from 'antd';
 import { InboxOutlined } from '@ant-design/icons'
 import React from 'react';
 import axios from 'axios'
-import { baseUrl } from './utils/baseUrl.js'
+import { baseUrl } from '../utils/baseUrl.js'
+
+import sock from '../utils/socket.js'
 
 const { Title } = Typography
 const { Dragger } = Upload;
@@ -16,6 +18,7 @@ class UploadPage extends React.Component {
     }
 
     handleUpload = () => {
+
         if (this.state.fileList.length === 0) {
             return message.error('请选择需要上传的文件')
         }
@@ -43,6 +46,10 @@ class UploadPage extends React.Component {
                 uploading: false,
                 fileList: [],
                 fileName: ''
+            })
+            sock.emit('events', {
+                name: '王丽娟',
+                message: `我上传了${arr.length}个文件`
             })
         })
     }

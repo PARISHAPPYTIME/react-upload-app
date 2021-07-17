@@ -1,6 +1,6 @@
 // import App from '../App.js'
 import ListPage from '../list.js'
-import UploadPage from '../upload.js'
+import UploadPage from '../views/upload.js'
 
 const routers = [
     {
