@@ -1,7 +1,9 @@
 
-import { Upload, Button, Typography } from 'antd';
+import { Upload, Button, Typography, message, Input } from 'antd';
 import { InboxOutlined } from '@ant-design/icons'
 import React from 'react';
+import axios from 'axios'
+import { baseUrl } from './utils/baseUrl.js'
 
 const { Title } = Typography
 const { Dragger } = Upload;
@@ -10,15 +12,47 @@ class UploadPage extends React.Component {
     state = {
         fileList: [],
         uploading: false,
+        fileName: ''
     }
 
     handleUpload = () => {
+        if (this.state.fileList.length === 0) {
+            return message.error('请选择需要上传的文件')
+        }
+        
         this.setState({
             uploading: true,
         })
-        console.log(this.props)
-        console.log(this.state.fileList)
+        
+        const arr = []
+        this.state.fileList.forEach(file => {
+            const formData = new FormData()
+            console.log(this.state.fileName, 99)
+            formData.append('name', this.state.fileName || file.name)
+            formData.append('file', file)
+            arr.push(axios({
+                url: `${baseUrl}/upload/append`,
+                method: 'POST',
+                data: formData
+            }))
+        })
+
+        Promise.all(arr).finally(() => {
+            message.success("文件上传成功")
+            this.setState({
+                uploading: false,
+                fileList: [],
+                fileName: ''
+            })
+        })
     }
+
+    handleInput = (e) => {
+        this.setState({
+            fileName: e.target.value
+        })
+    }
+
     render () {
         const { uploading, fileList } = this.state
 
@@ -26,7 +60,7 @@ class UploadPage extends React.Component {
             name: 'file',
             multiple: true,
             fileList,
-            action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+            action: '',
             onRemove: file => {
                 this.setState(state => {
                     const index = state.fileList.indexOf(file);
@@ -62,6 +96,7 @@ class UploadPage extends React.Component {
         return (
             <div>
                 <Title>Introduction</Title>
+                <Input value={this.state.fileName} onChange={this.handleInput} className="mb-15" size="large" placeholder="Basic usage" />
                 <Dragger {...props}>
                     <p className="ant-upload-drag-icon">
                         <InboxOutlined />
