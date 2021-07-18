@@ -1,9 +1,8 @@
-import './list.less'
 import React from 'react';
-import { Table, Typography, Input } from 'antd'
+import { Table, Typography, Input, Space, message } from 'antd'
 import { FileImageOutlined } from '@ant-design/icons'
 import axios from 'axios'
-import { baseUrl } from './utils/baseUrl.js'
+import { baseUrl } from '@/utils/baseUrl.js'
 import dayjs from 'dayjs'
 
 const { Title } = Typography
@@ -15,12 +14,37 @@ class ListPage extends React.Component {
     }
 
     jump = (fileUrl) => {
-        console.log(`${baseUrl}/${fileUrl}`)
         window.open(`${baseUrl}/${fileUrl}`)
     }
 
-    render () {
+    deleteItem = (item) => {
+        const { id } = item
+        axios({
+            url: `${baseUrl}/upload/remove`,
+            method: 'GET',
+            params: { id }
+        })
+            .then(res => res.data)
+            .then(res => {
+                message.success('列表数据删除成功')
+                this.getList()
+            })
+    }
 
+    getList() {
+        axios({
+            url: `${baseUrl}/upload/list`,
+            method: 'GET'
+        })
+            .then(res => res.data)
+            .then(res => {
+                this.setState({
+                    data: res
+                })
+            })
+    }
+
+    render () {
         const columns = [
             {
                 title: '文件名称',
@@ -37,7 +61,7 @@ class ListPage extends React.Component {
             },
             {
                 title: '更新时间',
-                width: 130,
+                width: 110,
                 align: 'center',
                 dataIndex: 'updated_at',
                 key: 'updated_at',
@@ -49,32 +73,36 @@ class ListPage extends React.Component {
                 title: '创作者',
                 width: 80,
                 align: 'center',
-                dataIndex: 'user_id',
-                key: 'user_id',
+                dataIndex: 'userId',
+                key: 'userId',
+            },
+            {
+                title: '操作',
+                width: 100,
+                align: 'center',
+                dataIndex: 'actions',
+                key: 'actions',
+                render: (text, record) => {
+                    return (
+                        <Space size="middle">
+                            <span onClick={() => this.deleteItem(record)} className="theme-color">删除记录</span>
+                        </Space>
+                    )
+                }
             }
         ]
 
         return (
-            <div className="">
+            <div className="list-class">
                 <Title>Introduction</Title>
                 <Input className="mb-15" size="large" placeholder="Basic usage" />
-                <Table bordered dataSource={this.state.data} columns={columns} rowKey="id" />
+                <Table dataSource={this.state.data} columns={columns} rowKey="id" />
             </div>
         )
     }
 
     componentDidMount () {
-        axios({
-            url: `${baseUrl}/upload/list`,
-            method: 'GET'
-        })
-            .then(res => res.data)
-            .then(res => {
-                console.log(res)
-                this.setState({
-                    data: res
-                })
-            })
+        this.getList()
     }
 }
 

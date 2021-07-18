@@ -3,9 +3,10 @@ import { Upload, Button, Typography, message, Input } from 'antd';
 import { InboxOutlined } from '@ant-design/icons'
 import React from 'react';
 import axios from 'axios'
-import { baseUrl } from '../utils/baseUrl.js'
+import { baseUrl } from '@/utils/baseUrl.js'
+import { connect } from 'react-redux'
 
-import sock from '../utils/socket.js'
+import sock from '@/utils/socket.js'
 
 const { Title } = Typography
 const { Dragger } = Upload;
@@ -18,21 +19,23 @@ class UploadPage extends React.Component {
     }
 
     handleUpload = () => {
+        const { username } = this.props
+        if (!username) return message.warn('请先登录')
 
         if (this.state.fileList.length === 0) {
             return message.error('请选择需要上传的文件')
         }
-        
+
         this.setState({
             uploading: true,
         })
-        
+
         const arr = []
         this.state.fileList.forEach(file => {
             const formData = new FormData()
-            console.log(this.state.fileName, 99)
             formData.append('name', this.state.fileName || file.name)
             formData.append('file', file)
+            formData.append('username', username)
             arr.push(axios({
                 url: `${baseUrl}/upload/append`,
                 method: 'POST',
@@ -48,8 +51,12 @@ class UploadPage extends React.Component {
                 fileName: ''
             })
             sock.emit('events', {
-                name: '王丽娟',
-                message: `我上传了${arr.length}个文件`
+                type: 'someOneUploadFile',
+                name: username,
+                message: `我上传了${arr.length}个文件`,
+                data: {
+                    number: arr.length
+                }
             })
         })
     }
@@ -78,17 +85,6 @@ class UploadPage extends React.Component {
                     }
                 })
             },
-            // onChange (info) {
-            //   const { status } = info.file;
-            //   if (status !== 'uploading') {
-            //     console.log(info.file, info.fileList);
-            //   }
-            //   if (status === 'done') {
-            //     message.success(`${info.file.name} file uploaded successfully.`);
-            //   } else if (status === 'error') {
-            //     message.error(`${info.file.name} file upload failed.`);
-            //   }
-            // },
             beforeUpload: file => {
                 this.setState(state => ({
                     fileList: [...state.fileList, file],
@@ -122,4 +118,11 @@ class UploadPage extends React.Component {
     }
 }
 
-export default UploadPage
+const mapStateToProps = (state) => {
+    return {
+        username: state.username
+    }
+}
+
+
+export default connect(mapStateToProps)(UploadPage)

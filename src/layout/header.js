@@ -1,59 +1,75 @@
 import React from 'react'
-import { message, PageHeader } from 'antd';
+import { PageHeader, message, Badge } from 'antd';
 import { AlignRightOutlined } from '@ant-design/icons'
-// import SockJs from "sockjs-client"
-// const sock = new SockJs('http://localhost:3000', { transports: ['websocket'] })
-
-import sock from '../utils/socket.js'
+import { connect } from 'react-redux'
+import cookie from 'react-cookies'
+import sock from '@/utils/socket.js'
 
 class HeaderComponent extends React.Component {
 
-    jump = () => {
-        console.log(this.props)
-        const { match } = this.props
-        if (match.path === '/main') {
-            this.props.history.push({
-                pathname: '/list'
-            })
-        } else {
-            this.props.history.push({
-                pathname: '/main'
-            })
-        }
+    state = {
+        badgeNum: 0
+    }
 
+    jump = () => {
+        const { match } = this.props
+        this.props.history.push({
+            pathname: match.path === '/main' ? '/list' : '/main'
+        })
+    }
+
+    jumpToLogin = () => {
+        this.props.history.push({
+            pathname: '/'
+        })
     }
 
     render () {
+        const { username } = this.props
         return (
             <PageHeader
                 ghost={false}
+                className="site-page-header"
                 title="Introduction"
                 subTitle="yxswy"
                 extra={[
-                    <AlignRightOutlined key="1" onClick={this.jump} />
+                    <div key="2" className="icon-class" onClick={this.jumpToLogin}>
+                        {username}
+                    </div>,
+                    <Badge count={this.state.badgeNum} key="1">
+                        <div className="icon-class" onClick={this.jump}>
+                            <AlignRightOutlined />
+                        </div>
+                    </Badge>
                 ]} />
         )
     }
 
-    componentDidMount() {
-        sock.on('login', (data) => {
-            message.success('登录部分 => ' + data)
-        });
-        sock.on('user', (data) => {
-            message.success('用户 => ' + data)
-        });
-        sock.on('message', (data) => {
-            message.success('我收到了消息 => ' + data)
-        });
+    componentDidMount () {
+        const { setUserName } = this.props
+        setUserName(cookie.load('username'))
 
-        // setTimeout(() => {
-        //     console.log('test1')
-        //     sock.emit('events', {
-        //         name: '王丽娟',
-        //         message: '我真的好想和你在一起'
-        //     })
-        // }, 5000)
+        sock.on('someOneUploadFile', (data) => {
+            console.log(data)
+            const num = this.state.badgeNum + data.number
+            this.setState({
+                badgeNum: num
+            })
+            message.success('当前有新的文件已经被上传，可以点击查看')
+        });
     }
 }
 
-export default HeaderComponent
+const mapStateToProps = (state) => {
+    return {
+        username: state.username
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setUserName: (username) => dispatch({ type: 'SET_USERNAME', payload: username })
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderComponent)

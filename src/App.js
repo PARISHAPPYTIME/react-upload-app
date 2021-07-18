@@ -1,9 +1,9 @@
 
-import './App.less';
+import '@/App.less';
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import routers from './router/index.js'
-import HeaderComponent from './layout/header';
+import routers from '@/router/index.js'
+import HeaderComponent from '@/layout/header';
 
 class App extends React.Component {
 	render () {
