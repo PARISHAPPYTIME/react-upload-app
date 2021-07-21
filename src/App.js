@@ -1,14 +1,14 @@
 
 import '@/App.less';
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { HashRouter, Route, Switch } from 'react-router-dom'
 import routers from '@/router/index.js'
 import HeaderComponent from '@/layout/header';
 
 class App extends React.Component {
 	render () {
 		return (
-			<BrowserRouter>
+			<HashRouter>
 				<Switch>
 					{
 						routers.map((router, index) => {
@@ -46,7 +46,7 @@ class App extends React.Component {
 						})
 					}
 				</Switch>
-			</BrowserRouter>
+			</HashRouter>
 		)
 	}
 }
