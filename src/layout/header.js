@@ -53,7 +53,7 @@ class HeaderComponent extends React.Component {
         const { setUserName } = this.props
         setUserName(cookie.load('username'))
 
-        sock.on('someOneUploadFile', (data) => {
+        sock.on('receive-someOneUploadFile', (data) => {
             console.log(data)
             const num = this.state.badgeNum + data.number
             this.setState({

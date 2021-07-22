@@ -14,7 +14,11 @@ sock.on('login', (data) => {
 sock.on('user', (data) => {
   message.success('2用户 => ' + data)
 });
-sock.on('message', (data) => {
+sock.on('events', (data) => {
+  message.success(data)
+});
+
+sock.on('receive-test', (data) => {
   message.success(data)
 });
 
@@ -24,10 +28,9 @@ sock.on('message', (data) => {
 // }
 
 // 客户端在这里手动出发一下自己出场的 事件
-// sock.emit('message', {
-//   name: name,
-//   message: `进入房间`
-// })
+sock.emit(
+  'test',
+  `进入房间`)
 
 ReactDOM.render(
   <Provider store={store}>
