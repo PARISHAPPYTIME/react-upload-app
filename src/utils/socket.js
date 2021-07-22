@@ -1,6 +1,7 @@
 import socketIo from "socket.io-client"
+import { baseUrl } from '@/utils/baseUrl.js'
 
-const sock = socketIo("http://localhost:3000", {
+const sock = socketIo(baseUrl, {
     transports: ["websocket"]
 })
 

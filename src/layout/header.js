@@ -1,6 +1,6 @@
 import React from 'react'
 import { PageHeader, message, Badge } from 'antd';
-import { AlignRightOutlined } from '@ant-design/icons'
+import { AlignRightOutlined, LogoutOutlined } from '@ant-design/icons'
 import { connect } from 'react-redux'
 import cookie from 'react-cookies'
 import sock from '@/utils/socket.js'
@@ -18,9 +18,9 @@ class HeaderComponent extends React.Component {
         })
     }
 
-    jumpToLogin = () => {
+    toLogin = () => {
         this.props.history.push({
-            pathname: '/'
+            pathname: '/login'
         })
     }
 
@@ -28,17 +28,21 @@ class HeaderComponent extends React.Component {
         const { username } = this.props
         return (
             <PageHeader
-                ghost={false}
                 className="site-page-header"
                 title="Introduction"
                 subTitle="yxswy"
                 extra={[
-                    <div key="2" className="icon-class" onClick={this.jumpToLogin}>
+                    <div key="1" className="icon-class">
                         {username}
                     </div>,
-                    <Badge count={this.state.badgeNum} key="1">
+                    <Badge count={this.state.badgeNum} key="2">
                         <div className="icon-class" onClick={this.jump}>
                             <AlignRightOutlined />
+                        </div>
+                    </Badge>,
+                    <Badge key="3" onClick={this.toLogin}>
+                        <div className="icon-class">
+                            <LogoutOutlined />
                         </div>
                     </Badge>
                 ]} />

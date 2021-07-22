@@ -4,7 +4,7 @@ import { InboxOutlined } from '@ant-design/icons'
 import React from 'react';
 import axios from 'axios'
 import { baseUrl } from '@/utils/baseUrl.js'
-import { connect } from 'react-redux'
+import server from '@/utils/request.js'
 
 import sock from '@/utils/socket.js'
 
@@ -19,9 +19,6 @@ class UploadPage extends React.Component {
     }
 
     handleUpload = () => {
-        const { username } = this.props
-        if (!username) return message.warn('请先登录')
-
         if (this.state.fileList.length === 0) {
             return message.error('请选择需要上传的文件')
         }
@@ -35,8 +32,7 @@ class UploadPage extends React.Component {
             const formData = new FormData()
             formData.append('name', this.state.fileName || file.name)
             formData.append('file', file)
-            formData.append('username', username)
-            arr.push(axios({
+            arr.push(server({
                 url: `${baseUrl}/upload/append`,
                 method: 'POST',
                 data: formData
@@ -44,7 +40,6 @@ class UploadPage extends React.Component {
         })
 
         Promise.all(arr).finally(() => {
-            message.success("文件上传成功")
             this.setState({
                 uploading: false,
                 fileList: [],
@@ -52,7 +47,6 @@ class UploadPage extends React.Component {
             })
             sock.emit('events', {
                 type: 'someOneUploadFile',
-                name: username,
                 message: `我上传了${arr.length}个文件`,
                 data: {
                     number: arr.length
@@ -118,11 +112,5 @@ class UploadPage extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        username: state.username
-    }
-}
 
-
-export default connect(mapStateToProps)(UploadPage)
+export default UploadPage
