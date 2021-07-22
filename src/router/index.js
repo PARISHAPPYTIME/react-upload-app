@@ -1,7 +1,6 @@
 // import App from '../App.js'
 import ListPage from '@/views/list.js'
 import UploadPage from '@/views/upload.js'
-import WelcomePage from '@/views/welcome.js'
 import LoginPage from '@/views/login.js'
 import RegisterPage from '@/views/register.js'
 
@@ -9,7 +8,7 @@ const routers = [
     {
         path: '/',
         exact: true,
-        component: WelcomePage
+        component: LoginPage
     },
     {
         path: '/register',

@@ -45,12 +45,8 @@ class UploadPage extends React.Component {
                 fileList: [],
                 fileName: ''
             })
-            sock.emit('events', {
-                type: 'someOneUploadFile',
-                message: `我上传了${arr.length}个文件`,
-                data: {
-                    number: arr.length
-                }
+            sock.emit('someOneUploadFile', {
+                number: arr.length
             })
         })
     }
