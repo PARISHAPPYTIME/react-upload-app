@@ -30,21 +30,20 @@ class HeaderComponent extends React.Component {
             <PageHeader
                 className="site-page-header"
                 title="Introduction"
-                subTitle="yxswy"
                 extra={[
-                    <div key="1" className="icon-class">
-                        {username}
-                    </div>,
-                    <Badge count={this.state.badgeNum} key="2">
-                        <div className="icon-class" onClick={this.jump}>
-                            <AlignRightOutlined />
-                        </div>
-                    </Badge>,
-                    <Badge key="3" onClick={this.toLogin}>
-                        <div className="icon-class">
-                            <LogoutOutlined />
-                        </div>
-                    </Badge>
+                    // <div key="1" className="icon-class">
+                    //     {username}
+                    // </div>,
+                    // <Badge count={this.state.badgeNum} key="2">
+                    //     <div className="icon-class" onClick={this.jump}>
+                    //         <AlignRightOutlined />
+                    //     </div>
+                    // </Badge>,
+                    // <Badge key="3" onClick={this.toLogin}>
+                    //     <div className="icon-class">
+                    //         <LogoutOutlined />
+                    //     </div>
+                    // </Badge>
                 ]} />
         )
     }

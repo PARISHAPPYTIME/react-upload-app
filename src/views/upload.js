@@ -2,7 +2,6 @@
 import { Upload, Button, Typography, message, Input } from 'antd';
 import { InboxOutlined } from '@ant-design/icons'
 import React from 'react';
-import axios from 'axios'
 import { baseUrl } from '@/utils/baseUrl.js'
 import server from '@/utils/request.js'
 
@@ -88,7 +87,6 @@ class UploadPage extends React.Component {
 
         return (
             <div>
-                <Title>Introduction</Title>
                 <Input value={this.state.fileName} onChange={this.handleInput} className="mb-15" size="large" placeholder="Basic usage" />
                 <Dragger {...props}>
                     <p className="ant-upload-drag-icon">

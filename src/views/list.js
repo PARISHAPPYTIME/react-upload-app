@@ -94,8 +94,6 @@ class ListPage extends React.Component {
 
         return (
             <div className="list-class">
-                <Title>Introduction</Title>
-                <Input className="mb-15" size="large" placeholder="Basic usage" />
                 <Table dataSource={this.state.data} columns={columns} rowKey="id" />
             </div>
         )
