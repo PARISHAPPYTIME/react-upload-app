@@ -1,18 +1,29 @@
-import { Typography } from 'antd'
 import React from 'react';
-
-const { Title } = Typography
+import { getCancel } from '@/utils/request-cancel'
 
 class WelcomePage extends React.Component {
 
-    render() {
+    render () {
         return (
             <div className="common-width">
-                <Title>Welcome</Title>
+
             </div>
         )
     }
+
+    componentDidMount () {
+        const [newRequest] = getCancel({
+            url: '/upload/list',
+            method: 'GET',
+            params: {
+                pageNo: 1,
+                pageSize: 10
+            }
+        })
+        newRequest().then(res => {
+            console.log(res)
+        })
+    }
 }
 
-// mapStateToProps、mapDispatchToProps、mergeProps和options
 export default WelcomePage

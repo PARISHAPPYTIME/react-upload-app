@@ -5,11 +5,11 @@ import cookie from 'react-cookies'
 
 const server = axios.create({
     baseURL: baseUrl,
-    timeout: 3000
+    timeout: 10000,
 })
 
 server.interceptors.request.use(config => {
-    console.log('请求前拦截')
+    console.log(config)
     const { headers: { ignoreCancelToken }} = config
 		// !ignoreCancelToken && axiosCancel.addPending(config)
 
@@ -29,15 +29,20 @@ server.interceptors.response.use(response => {
     const res = response.data
     const { code, message } = res
     if (code === 200) {
-        Msg.success(message)
+        message && Msg.success(message)
     } else {
         Msg.warning(message)
     }
     return res
 }, err => {
     console.log(err)
-    Msg.error("请求错误")
-    return Promise.reject(err)
+    if (axios.isCancel(err)) {
+        Msg.error("请求中断")
+        return Promise.resolve(true)
+    } else {
+        Msg.error("请求错误")
+        return Promise.reject(err)
+    }
 })
 
 export default server

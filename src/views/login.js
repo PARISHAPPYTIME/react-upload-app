@@ -58,6 +58,7 @@ class LoginPage extends React.Component {
                         <Button type="primary" block htmlType="submit">登录</Button>
                     </Form.Item>
                     <Button type="link" onClick={this.toRegister}>Create an account</Button>
+                    {this.props.children}
                 </Form>
             </div>
         )

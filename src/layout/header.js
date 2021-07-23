@@ -1,6 +1,5 @@
 import React from 'react'
-import { PageHeader, message, Badge } from 'antd';
-import { AlignRightOutlined, LogoutOutlined } from '@ant-design/icons'
+import { PageHeader, message } from 'antd';
 import { connect } from 'react-redux'
 import cookie from 'react-cookies'
 import sock from '@/utils/socket.js'
@@ -25,26 +24,11 @@ class HeaderComponent extends React.Component {
     }
 
     render () {
-        const { username } = this.props
         return (
             <PageHeader
                 className="site-page-header"
                 title="Introduction"
-                extra={[
-                    // <div key="1" className="icon-class">
-                    //     {username}
-                    // </div>,
-                    // <Badge count={this.state.badgeNum} key="2">
-                    //     <div className="icon-class" onClick={this.jump}>
-                    //         <AlignRightOutlined />
-                    //     </div>
-                    // </Badge>,
-                    // <Badge key="3" onClick={this.toLogin}>
-                    //     <div className="icon-class">
-                    //         <LogoutOutlined />
-                    //     </div>
-                    // </Badge>
-                ]} />
+                extra={[ ]} />
         )
     }
 

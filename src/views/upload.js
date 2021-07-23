@@ -1,5 +1,5 @@
 
-import { Upload, Button, Typography, message, Input } from 'antd';
+import { Upload, Button, message, Input } from 'antd';
 import { InboxOutlined } from '@ant-design/icons'
 import React from 'react';
 import { baseUrl } from '@/utils/baseUrl.js'
@@ -7,7 +7,6 @@ import server from '@/utils/request.js'
 
 import sock from '@/utils/socket.js'
 
-const { Title } = Typography
 const { Dragger } = Upload;
 
 class UploadPage extends React.Component {

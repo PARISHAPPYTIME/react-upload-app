@@ -1,11 +1,9 @@
 import React from 'react';
-import { Table, Typography, Input, Space, message } from 'antd'
+import { Table, Space, message } from 'antd'
 import { FileImageOutlined } from '@ant-design/icons'
 import axios from 'axios'
 import { baseUrl } from '@/utils/baseUrl.js'
 import dayjs from 'dayjs'
-
-const { Title } = Typography
 
 class ListPage extends React.Component {
 
@@ -27,7 +25,7 @@ class ListPage extends React.Component {
             .then(res => res.data)
             .then(res => {
                 message.success('列表数据删除成功')
-                this.getList()
+                // this.getList()
             })
     }
 
@@ -36,10 +34,9 @@ class ListPage extends React.Component {
             url: `${baseUrl}/upload/list`,
             method: 'GET'
         })
-            .then(res => res.data)
             .then(res => {
                 this.setState({
-                    data: res
+                    data: res?.data?.data?.data || []
                 })
             })
     }
