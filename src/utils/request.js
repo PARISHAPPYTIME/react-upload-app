@@ -9,7 +9,6 @@ const server = axios.create({
 })
 
 server.interceptors.request.use(config => {
-    console.log(config)
     const { headers: { ignoreCancelToken }} = config
 		// !ignoreCancelToken && axiosCancel.addPending(config)
 

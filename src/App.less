@@ -9,6 +9,24 @@
     }
 }
 
+.ant-layout {
+    & > section {
+        overflow-y: auto;
+    }
+}
+
+.app-layout-sider {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 99;
+}
+
+.ant-layout.ant-layout-has-sider {
+    overflow: hidden;
+}
+
 .app-menu {
     width: 306px;
     height: 100vh;
@@ -19,6 +37,12 @@
 .app-container {
     flex: 1;
     padding: 24px;
+    box-sizing: content-box;
+}
+
+.top-break {
+    display: flex;
+    justify-content: space-between;
 }
 
 .w-btn {
@@ -37,12 +61,22 @@
     margin-bottom: 15px;
 }
 
-.common-width {
-    width: 459px;
+.app-login-container {
+    width: 100%;
+    height: 100vh;
+    padding-top: 200px;
+    box-sizing: border-box;
+    .app-login {
+        width: 468px;
+        margin: 0 auto;
+    }
 }
 
 .list-class {
     width: 100%;
+    .ant-table-filter-dropdown {
+        width: 340px;
+    }
 }
 
 .icon1 {
@@ -69,8 +103,8 @@
     }
 }
 
-.ant-upload.ant-upload-drag {
-    width: 659px;
+.app-upload {
+    width: 759px;
     padding: 15px;
 }
 
@@ -80,13 +114,132 @@
 }
 
 .ant-layout {
-  background-color: white;
+    background-color: white;
 }
 
 .ant-layout-sider {
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 #components-layout-demo-top-side-2 {
     height: 100vh;
+}
+
+// icons.js
+.app-icons-class {
+    height: 100%;
+    .app-icon {
+        display: flex;
+        height: 100%;
+        padding: 0 15px;
+        cursor: pointer;
+        align-items: center;
+    }
+}
+
+// setting.js
+.app-setting-class {
+    .ant-card-grid {
+        width: 100%;
+        cursor: pointer;
+    }
+}
+
+// code-img.js
+.site-card-wrapper {
+    width: 100%;
+    .ant-card {
+        cursor: pointer;
+        box-shadow: 1px 0 0 0 #f0f0f0, 0 1px 0 0 #f0f0f0, 1px 1px 0 0 #f0f0f0,
+            1px 0 0 0 #f0f0f0 inset, 0 1px 0 0 #f0f0f0 inset;
+        transition: 0.3s all;
+        margin-bottom: 16px;
+        &:hover {
+            box-shadow: 0 1px 2px -2px rgb(0 0 0 / 16%),
+                0 3px 6px 0 rgb(0 0 0 / 12%), 0 5px 12px 4px rgb(0 0 0 / 9%);
+        }
+
+        .card-cover-image {
+            height: 160px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+            img {
+                width: 100%;
+            }
+        }
+    }
+
+    .example {
+        margin: 20px 0;
+        margin-bottom: 20px;
+        padding: 30px 50px;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: 4px;
+    }
+}
+
+// folder.js
+.app-folder-class {
+    .ant-layout-has-sider {
+
+        .ant-layout-sider {
+            position: sticky;
+            top: 0;
+        }
+    }
+    .ant-tree-iconEle {
+        height: 36px !important;
+        line-height: 36px !important;
+    }
+
+    .ant-tree {
+        .ant-tree-title {
+            height: 36px;
+            line-height: 36px;
+        }
+    }
+
+    .ant-tree-switcher {
+        top: 6px;
+    }
+
+    .ant-layout-content {
+        padding: 0 32px;
+        box-sizing: content-box;
+        position: relative;
+        .md-content {
+            width: 900px;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+        }
+
+        .site-page-header {
+            border-bottom: 1px solid rgb(235, 237, 240);
+        }
+    }
+}
+
+.els1 {
+    white-space: nowrap; /* 规定文本是否折行 */
+    overflow: hidden; /* 规定超出内容宽度的元素隐藏 */
+    text-overflow: ellipsis;
+    /* 规定超出的内容文本省略号显示，通常跟上面的属性连用，因为没有上面的属性不会触发超出规定的内容 */
+}
+
+.markdown-body {
+    box-sizing: border-box;
+    min-width: 200px;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 45px;
+}
+
+@media (max-width: 767px) {
+    .markdown-body {
+        padding: 15px;
+    }
 }

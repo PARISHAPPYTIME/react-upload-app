@@ -31,35 +31,37 @@ class LoginPage extends React.Component {
         })
     }
 
-    render() {
+    render () {
         return (
-            <div className="common-width">
-                <Title>Login</Title>
-                <Form
-                    initialValues={{ remember: true }}
-                    onFinish={this.onFinish}
-                    onFinishFailed={this.onFinishFailed}>
-                    <Form.Item
-                        name="username"
-                        rules={[{ required: true, message: 'Please input your username!' }]}>
-                        <Input size="large" placeholder="Username or email address" />
-                    </Form.Item>
-                    <Form.Item
-                        name="password"
-                        rules={[
-                            { required: true, message: 'Please input your password!' }
-                        ]}>
-                        <Input.Password size="large" placeholder="Password" />
-                    </Form.Item>
-                    <Form.Item name="remember" valuePropName="checked">
-                        <Checkbox>Remember me</Checkbox>
-                    </Form.Item>
-                    <Form.Item className="w-btn">
-                        <Button type="primary" block htmlType="submit">登录</Button>
-                    </Form.Item>
-                    <Button type="link" onClick={this.toRegister}>Create an account</Button>
-                    {this.props.children}
-                </Form>
+            <div className="app-login-container">
+                <div className="app-login">
+                    <Title>Sign in</Title>
+                    <Form
+                        initialValues={{ remember: true }}
+                        onFinish={this.onFinish}
+                        onFinishFailed={this.onFinishFailed}>
+                        <Form.Item
+                            name="username"
+                            rules={[{ required: true, message: 'Please input your username!' }]}>
+                            <Input size="large" placeholder="Username or email address" />
+                        </Form.Item>
+                        <Form.Item
+                            name="password"
+                            rules={[
+                                { required: true, message: 'Please input your password!' }
+                            ]}>
+                            <Input.Password size="large" placeholder="Password" />
+                        </Form.Item>
+                        <Form.Item name="remember" valuePropName="checked">
+                            <Checkbox>Remember me</Checkbox>
+                        </Form.Item>
+                        <Form.Item className="w-btn">
+                            <Button type="primary" block htmlType="submit">登录</Button>
+                        </Form.Item>
+                        <Button type="link" onClick={this.toRegister}>Create an account</Button>
+                        {this.props.children}
+                    </Form>
+                </div>
             </div>
         )
     }

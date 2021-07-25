@@ -28,7 +28,8 @@ class UploadPage extends React.Component {
         const arr = []
         this.state.fileList.forEach(file => {
             const formData = new FormData()
-            formData.append('name', this.state.fileName || file.name)
+            formData.append('name', this.state.fileName)
+            formData.append('filename', file.name)
             formData.append('file', file)
             arr.push(server({
                 url: `${baseUrl}/upload/append`,
@@ -85,8 +86,9 @@ class UploadPage extends React.Component {
         }
 
         return (
-            <div>
+            <div className="app-upload">
                 <Input value={this.state.fileName} onChange={this.handleInput} className="mb-15" size="large" placeholder="Basic usage" />
+                <p>发布： username</p>
                 <Dragger {...props}>
                     <p className="ant-upload-drag-icon">
                         <InboxOutlined />

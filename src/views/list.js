@@ -1,9 +1,8 @@
 import React from 'react';
-import { Table, Space, message } from 'antd'
-import { FileImageOutlined } from '@ant-design/icons'
-import axios from 'axios'
+import { Table, Space, message, Divider, Button } from 'antd'
 import { baseUrl } from '@/utils/baseUrl.js'
 import dayjs from 'dayjs'
+import server from '@/utils/request'
 
 class ListPage extends React.Component {
 
@@ -17,26 +16,29 @@ class ListPage extends React.Component {
 
     deleteItem = (item) => {
         const { id } = item
-        axios({
+        server({
             url: `${baseUrl}/upload/remove`,
             method: 'GET',
             params: { id }
         })
-            .then(res => res.data)
             .then(res => {
                 message.success('列表数据删除成功')
-                // this.getList()
+                this.getList()
             })
     }
 
+    powerDownLoadFile = (filename) => {
+        // window.open(`${baseUrl}/upload/download/${filename}`)
+    }
+
     getList() {
-        axios({
-            url: `${baseUrl}/upload/list`,
+        server({
+            url: `/upload/list`,
             method: 'GET'
         })
             .then(res => {
                 this.setState({
-                    data: res?.data?.data?.data || []
+                    data: res?.data?.data || []
                 })
             })
     }
@@ -44,17 +46,32 @@ class ListPage extends React.Component {
     render () {
         const columns = [
             {
-                title: '文件名称',
+                title: '序号',
+                width: 65,
+                align: 'center',
+                dataIndex: 'index',
+                key: 'index',
+                render: (text, record, index) => {
+                    return <span>{index + 1}</span>
+                }
+            },
+            {
+                title: '备注',
                 dataIndex: 'name',
                 key: 'name',
                 render: (text, record) => {
                     return (
                         <span>
-                            <FileImageOutlined className="icon1" />
                             <a target="_blank" href={`${baseUrl}/${record.path}`} rel="noreferrer">{text}</a>
                         </span>
                     )
                 },
+                filters: [
+                    { text: 'PNG 文件', value: 'London22222222222222222' },
+                    { text: 'JPEG 文件', value: 'New 2York' },
+                    { text: 'PDF 文件', value: 'New Y3ork' },
+                    { text: 'WORD 文件', value: 'New 4York' },
+                ],
             },
             {
                 title: '更新时间',
@@ -75,14 +92,19 @@ class ListPage extends React.Component {
             },
             {
                 title: '操作',
-                width: 100,
+                width: 230,
                 align: 'center',
                 dataIndex: 'actions',
+                fixed: 'right',
                 key: 'actions',
                 render: (text, record) => {
                     return (
                         <Space size="middle">
-                            <span onClick={() => this.deleteItem(record)} className="theme-color">删除记录</span>
+                            <span onClick={() => this.deleteItem(record)} className="theme-color">删除</span>
+                            <Divider type="vertical" />
+                            <span className="theme-color">详情</span>
+                            <Divider type="vertical" />
+                            <a target="_blank" href={`${baseUrl}/upload/download/${record.filename}`} download={record.filename} rel="noreferrer">下载</a>
                         </Space>
                     )
                 }
@@ -91,7 +113,7 @@ class ListPage extends React.Component {
 
         return (
             <div className="list-class">
-                <Table dataSource={this.state.data} columns={columns} rowKey="id" />
+                <Table dataSource={this.state.data} scroll={{ x: 1100 }} columns={columns} rowKey="id" />
             </div>
         )
     }

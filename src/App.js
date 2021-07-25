@@ -1,8 +1,7 @@
-
-
 import React from 'react';
 import { HashRouter, Route, Switch } from 'react-router-dom'
 import routers from '@/router/index.js'
+import PrivateRoute from '@/router/private-router.js'
 
 
 class App extends React.Component {
@@ -23,7 +22,7 @@ class App extends React.Component {
 												{
 													router.children?.map((item, itemIndex) => {
 														return (
-															<Route
+															<PrivateRoute
 																exact={item.exact}
 																key={itemIndex}
 																path={item.path}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Skeleton, Card } from 'antd'
+import { Skeleton, Divider } from 'antd'
 
 class MessagePage extends React.Component {
     render () {
@@ -12,6 +12,8 @@ class MessagePage extends React.Component {
                 >
                     Inner Card content
                 </Card> */}
+                <Skeleton active={true} avatar paragraph={{ rows: 4 }} />
+                <Divider />
                 <Skeleton active={true} avatar paragraph={{ rows: 4 }} />
             </>
 

@@ -5,8 +5,11 @@ import LoginPage from '@/views/login.js'
 import RegisterPage from '@/views/register.js'
 import WelcomePage from '@/views/welcome.js'
 import MessagePage from '@/views/message.js'
+import SettingPage from '@/views/setting.js'
+import CodeImagePage from '@/views/code-img.js'
 
 import MainLayout from '@/layout/index'
+import FolderPage from '@/views/folder'
 
 const routers = [
     {
@@ -15,20 +18,19 @@ const routers = [
         component: WelcomePage,
     },
     {
+        path: '/login',
+        exact: true,
+        component: LoginPage,
+    },
+    {
+        path: '/register',
+        exact: true,
+        component: RegisterPage
+    },
+    {
         path: '/',
         component: MainLayout,
         children: [
-            {
-                path: '/login',
-                exact: true,
-                component: LoginPage,
-            },
-
-            {
-                path: '/register',
-                exact: true,
-                component: RegisterPage
-            },
             {
                 path: '/list',
                 exact: true,
@@ -43,6 +45,20 @@ const routers = [
                 path: '/message',
                 exact: true,
                 component: MessagePage
+            },
+            {
+                path: '/setting',
+                exact: true,
+                component: SettingPage
+            },
+            {
+                path: '/code/img',
+                exact: true,
+                component: CodeImagePage
+            },
+            {
+                path: '/folder/:key*',
+                component: FolderPage
             }
         ]
     },
